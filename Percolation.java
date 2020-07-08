@@ -1,25 +1,23 @@
-import java.util.ArrayList;
-import java.util.Random;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    private QuickUnionWeighted grid;
+    private final WeightedQuickUnionUF grid;
     private boolean[] status;
-    private ArrayList<Integer> closedSites = new ArrayList<>();
-    private int n, actualSize;
+    private int openCount = 0;
+    private final int n;
     private final int vSite1, vSite2;
 
     // creates n-by-n grid, with all sites initially blocked
     public Percolation(int n) {
         this.n = n;
-        actualSize = n * n;
-        grid = new QuickUnionWeighted(actualSize);
+        int actualSize = n * n;
+        grid = new WeightedQuickUnionUF(actualSize);
         status = new boolean[actualSize];
         vSite1 = 0;
         vSite2 = actualSize - 1;
 
         for (int i = 0; i < actualSize; i++) {
-            closedSites.add(i);
             status[i] = false;
 
             if (i < n)
@@ -31,55 +29,44 @@ public class Percolation {
 
     // opens the site (row, col) if it is not open already
     public void open(int row, int col) {
-        status[GetLocation(row, col)] = true;
+        if (row < 0 || col < 0)
+            throw new IllegalArgumentException();
+        if (isOpen(row, col))
+            return;
+        openCount++;
+        status[getLocation(row - 1, col - 1)] = true;
 
-        if (IsValidLocation(row - 1, col))
+        if (isValidLocation(row - 1 - 1, col - 1))
             if (isOpen(row - 1, col))
-                grid.union(GetLocation(row - 1, col), GetLocation(row, col));
+                grid.union(getLocation(row - 1 - 1, col - 1), getLocation(row - 1, col - 1));
 
-        if (IsValidLocation(row, col - 1))
+        if (isValidLocation(row - 1, col - 1 - 1))
             if (isOpen(row, col - 1))
-                grid.union(GetLocation(row, col - 1), GetLocation(row, col));
+                grid.union(getLocation(row - 1, col - 1 - 1), getLocation(row - 1, col - 1));
 
-        if (IsValidLocation(row + 1, col))
+        if (isValidLocation(row + 1 - 1, col - 1))
             if (isOpen(row + 1, col))
-                grid.union(GetLocation(row + 1, col), GetLocation(row, col));
+                grid.union(getLocation(row + 1 - 1, col - 1), getLocation(row - 1, col - 1));
 
-        if (IsValidLocation(row, col + 1))
+        if (isValidLocation(row - 1, col - 1 + 1))
             if (isOpen(row, col + 1))
-                grid.union(GetLocation(row, col + 1), GetLocation(row, col));
+                grid.union(getLocation(row - 1, col - 1 + 1), getLocation(row - 1, col - 1));
 
-    }
-
-    // select a random site
-    public int RandomSite() {
-        Random rand = new Random();
-        int random = 0;
-        try {
-            random = rand.nextInt(closedSites.size() - 1);
-        } catch (Exception err) {
-            System.out.println(err.getMessage());
-        }
-
-        return closedSites.get(random);
-    }
-
-    public void OpenRandom() {
-        int random = RandomSite();
-        int[] sites = GetLocation(random);
-        closedSites.remove(closedSites.indexOf(random));
-        open(sites[0], sites[1]);
     }
 
     // is the site (row, col) open?
     public boolean isOpen(int row, int col) {
-        return status[GetLocation(row, col)];
+        if (row < 0 || col < 0)
+            throw new IllegalArgumentException();
+        return status[getLocation(row - 1, col - 1)];
     }
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col) {
-        if (isOpen(row, col) == true) {
-            if (grid.root(GetLocation(row, col)) == vSite1)
+        if (row < 0 || col < 0)
+            throw new IllegalArgumentException();
+        if (isOpen(row - 1, col - 1)) {
+            if (grid.find(getLocation(row - 1, col - 1)) == vSite1)
                 return true;
         }
 
@@ -87,33 +74,28 @@ public class Percolation {
     }
 
     // returns the number of open sites
-    public double numberOfOpenSites() {
-        return actualSize - closedSites.size();
+    public int numberOfOpenSites() {
+        return openCount;
     }
 
     // does the system percolate?
     public boolean percolates() {
-        if (grid.connected(vSite1, vSite2))
+        if (grid.find(vSite1) == grid.find(vSite2))
             return true;
         return false;
     }
 
     // checks if the location is valid
-    public boolean IsValidLocation(int row, int col) {
+    private boolean isValidLocation(int row, int col) {
         if (row < 0 || col < 0 || row >= n || col >= n)
             return false;
         return true;
     }
 
     // get location from row, col
-    private int GetLocation(int row, int col) {
+    private int getLocation(int row, int col) {
+        if (row < 0 || col < 0)
+            throw new IllegalArgumentException();
         return (n * (row)) + (col);
-    }
-
-    // get row, col from location
-    private int[] GetLocation(int value) {
-        int row = value / n;
-        int col = value % n;
-        return new int[] { row, col };
     }
 }

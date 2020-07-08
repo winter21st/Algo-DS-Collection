@@ -11,11 +11,11 @@ method should return 999 for each of the four elements in the connected componen
 
 import java.util.Arrays;
 
-class UnionFindInterviewQn2 {
+class Week1InterviewQn2 {
 
     int[] id, sz, max;
 
-    UnionFindInterviewQn2(int n) {
+    Week1InterviewQn2(int n) {
         id = new int[n];
         sz = new int[n];
         max = new int[n];
@@ -70,7 +70,7 @@ class UnionFindInterviewQn2 {
     }
 
     public static void main(String[] args) {
-        UnionFindInterviewQn2 uf = new UnionFindInterviewQn2(10);
+        Week1InterviewQn2 uf = new Week1InterviewQn2(10);
         double startTime = System.nanoTime();
         uf.union(1, 3);
         uf.union(1, 5);

@@ -1,11 +1,11 @@
-public class UnionFindInterviewQn3 {
+public class Week1InterviewQn3 {
 
     private int id[];
     private int sz[];
     private int actualList[];
     private int N;
 
-    public UnionFindInterviewQn3(int N) {
+    public Week1InterviewQn3(int N) {
         this.N = N;
         id = new int[N];
         sz = new int[N];
@@ -68,7 +68,7 @@ public class UnionFindInterviewQn3 {
     }
 
     public static void main(String[] args) {
-        UnionFindInterviewQn3 uf = new UnionFindInterviewQn3(10);
+        Week1InterviewQn3 uf = new Week1InterviewQn3(10);
         double startTime = System.nanoTime();
         uf.remove(4);
         uf.remove(5);

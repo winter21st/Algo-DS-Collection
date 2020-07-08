@@ -6,30 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "CodeLens (Launch) - WeightedQuickUnion",
-            "request": "launch",
-            "mainClass": "WeightedQuickUnion",
-            "projectName": "interviewprep_8adee424"
-        },
-        {
-            "type": "java",
             "name": "Debug (Launch) with Arguments Prompt",
             "request": "launch",
             "mainClass": "",
             "args": "${command:SpecifyProgramArgs}"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch) - Current File",
-            "request": "launch",
-            "mainClass": "${file}"
-        },
-        {
-            "type": "java",
-            "name": "Debug (Launch)-UnionFindTest<interviewprep_8adee424>",
-            "request": "launch",
-            "mainClass": "UnionFindTest",
-            "projectName": "interviewprep_8adee424"
         }
     ]
 }

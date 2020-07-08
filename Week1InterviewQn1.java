@@ -11,12 +11,12 @@ extra space proportional to n.
 
 import java.util.Arrays;
 
-class UnionFindInterviewQn1 {
+class Week1InterviewQn1 {
 
     private int[] id, sz;
     private int count;
 
-    UnionFindInterviewQn1(int n) {
+    Week1InterviewQn1(int n) {
         id = new int[n];
         sz = new int[n];
         count = n;
@@ -65,7 +65,7 @@ class UnionFindInterviewQn1 {
 
     public static void main(String[] args) {
         int count = 10;
-        UnionFindInterviewQn1 uf = new UnionFindInterviewQn1(count);
+        Week1InterviewQn1 uf = new Week1InterviewQn1(count);
         String[] timestamp = new String[count - 1];
         timestamp[0] = "1 3 01:00";
         timestamp[1] = "1 5 02:00";
