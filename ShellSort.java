@@ -4,19 +4,23 @@ import java.io.IOException;
 
 import edu.princeton.cs.algs4.Stopwatch;
 
-public class InsertionSort {
+public class ShellSort {
 
     public static void sort(int[] arr) {
         int size = arr.length;
-        for (int i = 1; i < size; i++) {
-            for (int j = i; j > 0; j--) {
-                if (arr[j] < arr[j - 1]) {
+        int h = 1;
+
+        while (h < size / 3)
+            h = 3 * h + 1;
+        while (h >= 1) {
+            for (int i = h; i < size; i++) {
+                for (int j = i; j >= h && arr[j] < arr[j - h]; j -= h) {
                     int temp = arr[j];
-                    arr[j] = arr[j - 1];
-                    arr[j - 1] = temp;
+                    arr[j] = arr[j - h];
+                    arr[j - h] = temp;
                 }
-                else j = 0;
             }
+            h /= 3;
         }
     }
 
@@ -35,7 +39,7 @@ public class InsertionSort {
             a[i] = Integer.parseInt(ss[i]);
         }
         Stopwatch w = new Stopwatch();
-        InsertionSort.sort(a);
+        ShellSort.sort(a);
         System.out.println(w.elapsedTime());
     }
 }

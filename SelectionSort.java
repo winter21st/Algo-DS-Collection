@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import edu.princeton.cs.algs4.Stopwatch;
+
 public class SelectionSort {
 
     public static void sort(int[] arr) {
@@ -16,11 +22,21 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        int[] a = { 4, 1, 5, 2, 6, 3 };
+        int[] a;
+        String line = "";
+        try (BufferedReader br = new BufferedReader(
+                new FileReader("/home/winter/Newfolder/Algo-DS-Collection/" + args[0]))) {
+            line = br.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String[] ss = line.split(",");
+        a = new int[ss.length];
+        for (int i = 0; i < ss.length; i++) {
+            a[i] = Integer.parseInt(ss[i]);
+        }
+        Stopwatch w = new Stopwatch();
         SelectionSort.sort(a);
-        for (int i : a) {
-            
-        System.out.print(i);
-        };
+        System.out.println(w.elapsedTime());
     }
 }
