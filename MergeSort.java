@@ -5,6 +5,7 @@ import java.io.IOException;
 public class MergeSort {
 
     private static int[] aux;
+    private static final int CUTOFF = 7;
     
     public static void sort(int[] arr) {
         aux = new int[arr.length];
@@ -12,11 +13,23 @@ public class MergeSort {
     }
 
     private static void sort(int[] arr, int[] aux, int low, int high) {
-        if(high <= low) return;
+        //Improvement 1
+        //- MergeSort has too much overhead for small arrays 
+        //--------------------------------------------------------------------------
+        if(high <= low + CUTOFF - 1) {
+            InsertionSort.sort(arr);
+            return;
+        };
+        //--------------------------------------------------------------------------
 
         int mid = low + (high - low) /2;
         sort(arr, aux, low, mid);
         sort(arr, aux, mid + 1, high);
+        //Improvement 2
+        //- Helps partially sorted arrays 
+        //--------------------------------------------------------------------------
+        if(arr[mid + 1] < arr[mid]) return;
+        //--------------------------------------------------------------------------
         merge(arr, aux, low, mid, high);
     }
 
