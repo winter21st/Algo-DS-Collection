@@ -28,7 +28,7 @@ public class ShellSort {
         int[] a;
         String line = "";
         try (BufferedReader br = new BufferedReader(
-                new FileReader("/home/winter/Newfolder/Algo-DS-Collection/" + args[0]))) {
+                new FileReader("./" + args[0]))) {
             line = br.readLine();
         } catch (IOException e) {
             e.printStackTrace();
