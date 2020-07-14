@@ -6,32 +6,33 @@ public class MergeSort {
 
     private static int[] aux;
     // private static final int CUTOFF = 7;
-    
+
     public static void sort(int[] arr) {
         aux = new int[arr.length];
         sort(arr, aux, 0, arr.length - 1);
     }
 
     private static void sort(int[] arr, int[] aux, int low, int high) {
-        //Improvement 1
-        //- MergeSort has too much overhead for small arrays 
-        //--------------------------------------------------------------------------
+        // Improvement 1
+        // - MergeSort has too much overhead for small arrays
+        // --------------------------------------------------------------------------
         // if(high <= low + CUTOFF - 1) {
-        //     InsertionSort.sort(arr);
-        //     return;
+        // InsertionSort.sort(arr);
+        // return;
         // };
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
 
-        if(high <= low) return;
+        if (high <= low)
+            return;
 
-        int mid = low + (high - low) /2;
+        int mid = low + (high - low) / 2;
         sort(arr, aux, low, mid);
         sort(arr, aux, mid + 1, high);
-        //Improvement 2
-        //- Helps partially sorted arrays 
-        //--------------------------------------------------------------------------
+        // Improvement 2
+        // - Helps partially sorted arrays
+        // --------------------------------------------------------------------------
         // if(arr[mid + 1] < arr[mid]) return;
-        //--------------------------------------------------------------------------
+        // --------------------------------------------------------------------------
         merge(arr, aux, low, mid, high);
     }
 
@@ -41,20 +42,23 @@ public class MergeSort {
         }
 
         int i = low;
-        int j = mid+ 1;
+        int j = mid + 1;
         for (int k = low; k <= high; k++) {
-            if(i > mid) arr[k] = aux[j++];
-            else if(j > mid) arr[k] = aux[i++];
-            else if(aux[j] < aux[i]) arr[k] = aux[j++];
-            else arr[k] = aux[i++];
+            if (i > mid)
+                arr[k] = aux[j++];
+            else if (j > mid)
+                arr[k] = aux[i++];
+            else if (aux[j] < aux[i])
+                arr[k] = aux[j++];
+            else
+                arr[k] = aux[i++];
         }
     }
 
     public static void main(String[] args) {
         int[] a;
         String line = "";
-        try (BufferedReader br = new BufferedReader(
-                new FileReader("./" + args[0]))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("./" + args[0]))) {
             line = br.readLine();
         } catch (IOException e) {
             e.printStackTrace();
