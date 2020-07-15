@@ -37,21 +37,29 @@ public class MergeSort {
     }
 
     private static void merge(int[] arr, int[] aux, int low, int mid, int high) {
-        for (int x = low; x < high; x++) {
-            aux[x] = arr[x];
-        }
+        if (high == low + 1) {
+            if (arr[low + 1] < arr[low]) {
+                int temp = arr[low + 1];
+                arr[low + 1] = arr[low];
+                arr[low] = temp;
+            }
+        } else {
+            for (int x = low; x <= high; x++) {
+                aux[x] = arr[x];
+            }
 
-        int i = low;
-        int j = mid + 1;
-        for (int k = low; k <= high; k++) {
-            if (i > mid)
-                arr[k] = aux[j++];
-            else if (j > mid)
-                arr[k] = aux[i++];
-            else if (aux[j] < aux[i])
-                arr[k] = aux[j++];
-            else
-                arr[k] = aux[i++];
+            int i = low;
+            int j = mid + 1;
+            for (int k = low; k <= high; k++) {
+                if (i > mid)
+                    arr[k] = aux[j++];
+                else if (j > high)
+                    arr[k] = aux[i++];
+                else if (aux[j] < aux[i])
+                    arr[k] = aux[j++];
+                else
+                    arr[k] = aux[i++];
+            }
         }
     }
 
