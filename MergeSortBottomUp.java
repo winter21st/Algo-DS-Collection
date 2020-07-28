@@ -18,7 +18,7 @@ public class MergeSortBottomUp {
     }
 
     private static void merge(int[] arr, int low, int mid, int high) {
-        for (int x = low; x < high; x++) {
+        for (int x = low; x <= high; x++) {
             aux[x] = arr[x];
         }
 
@@ -27,7 +27,7 @@ public class MergeSortBottomUp {
         for (int k = low; k <= high; k++) {
             if (i > mid)
                 arr[k] = aux[j++];
-            else if (j > mid)
+            else if (j > high)
                 arr[k] = aux[i++];
             else if (aux[j] < aux[i])
                 arr[k] = aux[j++];
